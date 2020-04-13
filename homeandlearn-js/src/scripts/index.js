@@ -50,20 +50,13 @@ window.addEventListener('load', () => {
   }
 
   function setMenuButton (id) {
-    let b = document.createElement(`button`)
+    let b = getBaseButton()
     b.id = id
     b.innerHTML = `Show Menu`
     b.onclick = () => setMenu()
-    b.style.backgroundColor = `#4CAF50` /* Green */
     b.style.border = `none`
-    b.style.color = `white`
     b.style.padding = `15px 32px`
-    b.style.textAlign = `center`
-    b.style.textDecoration = `none`
-    b.style.display = `inline-block`
     b.style.marginTop = `2em`
-    b.style.borderRadius = `5px`
-    b.style.cursor = `pointer`
     return b
   }
 
@@ -189,24 +182,31 @@ window.addEventListener('load', () => {
       document.getElementById(`greeting_span`).innerHTML = `Hi stranger`
     }
 
-    let b = document.createElement(`button`)
+    let b = getBaseButton()
     b.id = `greeting_button`
     b.innerHTML = (name_added ? `Change name` : `Add name`)
     b.onclick = () => getGreetingText()
-    b.style.backgroundColor = `#4CAF50` // Green
     b.style.border = `true`
     b.style.borderColor = `black`
-    b.style.color = `white`
     b.style.padding = `0.5em`
-    b.style.textAlign = `center`
     b.style.textDecoration = `none`
-    b.style.display = `inline-block`
     b.style.marginBottom = `2em`
-    b.style.borderRadius = `5px`
-    b.style.cursor = `pointer`
 
     document.getElementById(`greeting_field_div`).appendChild(b)
     name_added = !name_added
+  }
+
+  function getBaseButton () {
+    let b = document.createElement(`button`)
+    b.style.backgroundColor = `#4CAF50` // Green
+    b.style.textAlign = `center`
+    b.style.color = `white`
+    b.style.display = `inline-block`
+    b.style.cursor = `pointer`
+    b.style.borderRadius = `5px`
+    b.style.textDecoration = `none`
+
+    return b
   }
 
   function setGreetingField () {
