@@ -102,9 +102,10 @@ window.addEventListener('load', () => {
   }
 
   function setBackGround () {
-    document.body.style.backgroundImage = `url('${resource_location}/img/reef.jpg')`
+    document.body.style.backgroundImage = `url('${resource_location}/img/reef-mirror.jpg')`
     document.body.style.backgroundSize = `cover`
     document.body.style.backgroundRepeat = `no-repeat`
+    document.body.style.overflow = `visible`
   }
 
   function buildElementForMenu (id, text) {
