@@ -8,20 +8,27 @@
     <script type="text/javascript" src="../scripts/images.js"></script>
 </head>
 <body>
-<p>
-    <img src="../img/home.jpg" alt="home">
-</p>
+<p><img src="../img/home.jpg" alt="home"></p>
 
-<p>
-    <img src="../img/home2.jpg" alt="home2">
-</p>
+<p><img src="../img/home2.jpg" alt="home2"></p>
 
-<p>
-    <input type="button" value="Go" onclick="showImageSources()">
-</p>
+<table width="500">
+    <tr>
+        <td height="200" width="100">
+            <img src="../img/image_scroll/forward.gif" title="Scroll forward" onclick="scrollImage(1)"
+                 alt="Scroll back">
+        </td>
+        <td width="300">
+            <img src="../img/image_scroll/pic_1.jpg" name="pic1" id="scrolled_image" alt="London image">
+        </td>
+        <td height="200" width="100">
+            <img src="../img/image_scroll/back.gif" title="Scroll back" onclick="scrollImage(-1)" alt="Scroll forward">
+        </td>
+    </tr>
+</table>
 
-<p>
-    <label id="images_label">Image Names</label>
-</p>
+<p><input type="button" value="Show images sources" onclick="showImageSources()"></p>
+
+<p><label id="images_label">Image Names</label></p>
 </body>
 </html>
