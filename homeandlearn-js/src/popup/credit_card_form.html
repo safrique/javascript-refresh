@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript forms</title>
+
+    <script type="text/javascript" src="../scripts/credit_card.js"></script>
+</head>
+<body>
+<form name="formOne" action="" method="POST">
+    <p>
+        <label for="email">email: </label>
+        <input type="text" id="email" name="email" value="" placeholder="email address">
+        <span style="color:red" id="email_error"></span>
+    </p>
+
+    <p>
+        Payment Options:
+        <input type="radio" name="payment" value="cc" id="cc">Credit card
+        <input type="radio" name="payment" value="dc" id="dc">Debit card
+        <input type="radio" name="payment" value="pp" id="pp">PayPal
+        <span style="color:red" id="radio_error"></span>
+    </p>
+
+    <p>
+        <label for="hear">Where did you hear about us?</label>
+        <select id="hear" name="hear">
+            <option value="none">None</option>
+            <option value="paper">Newspaper</option>
+            <option value="tv">Television</option>
+            <option value="mouth">Word of mouth</option>
+            <option value="search">Search engine</option>
+        </select>
+        <span style="color:red" id="dropdown_error"></span>
+    </p>
+
+    <p>
+        <label for="cb1">Terms and Conditions</label>
+        <input type="checkbox" name="terms" id="cb1" value="T&C">
+        <span style="color:red" id="checkbox_error"></span>
+    </p>
+
+    <input type="button" value="Submit" onclick="validate()">
+    <!--    <input type="button" value="Submit" onclick="alert(validate() ? `true` : `false`)">-->
+</form>
+</body>
+</html>

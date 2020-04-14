@@ -8,15 +8,27 @@ window.addEventListener('load', () => {
   let main_container_div = setMainContainerDiv(main_container_div_id)
   document.body.appendChild(main_container_div)
   main_container_div.appendChild(setH1(`main_h1`))
+  main_container_div.appendChild(setDateField())
   main_container_div.appendChild(setGreetingField())
   setGreetingNameField()
   setElements()
   setMenu()
   setBackGround()
 
+  function setDateField () {
+    let d = document.createElement(`d`)
+    d.style.margin = `2em`
+    d.style.textAlign = `center`
+    d.style.color = `white`
+    let dt = new Date()
+    d.innerHTML = dt.toString()
+    return d
+  }
+
   function setElements () {
     parts.push({ 'id': `welcome_popup_div`, 'text': `Click me for welcome popup` })
     parts.push({ 'id': `height_div`, 'text': `Show screen height div` })
+    parts.push({ 'id': `credit_card_form`, 'text': `Show credit card form` })
     parts.push({ 'id': `show_menu_button`, 'text': `` })
   }
 
@@ -62,6 +74,7 @@ window.addEventListener('load', () => {
 
   function removeElement (id) {
     let element = document.getElementById(id)
+
     if (element !== null) {
       console.log(`id=${id}`, element)
       element.parentNode.removeChild(element)
@@ -100,6 +113,9 @@ window.addEventListener('load', () => {
       case `welcome_popup_div`:
         document.getElementById(main_container_div_id).appendChild(setWelcomePopupLink(id, text))
         break
+      case `credit_card_form`:
+        document.getElementById(main_container_div_id).appendChild(buildCreditCardFormLink(id, text))
+        break
       default:  // `height_div`
         document.getElementById(main_container_div_id).appendChild(setScreenHeightDiv(id))
     }
@@ -107,23 +123,43 @@ window.addEventListener('load', () => {
     document.getElementById(main_container_div_id).appendChild(setMenuButton(`show_menu_button`))
   }
 
-  function setWelcomePopupLink (id, text) {
+  function buildCreditCardFormLink (id, text) {
     let d = document.createElement(`div`)
     d.id = id
+    let s = getBaseSpan(id)
+    s.appendChild(getBaseLinkTag(id, text, followCreditCardFormLink, `Open credit card form`))
+    d.appendChild(s)
+    return d
+  }
 
+  function followCreditCardFormLink () {
+    window.open(`${resource_location}/popup/credit_card_form.html`, `Popup`)
+  }
+
+  function getBaseSpan (id) {
     let s = document.createElement(`span`)
     s.id = `${id}_span`
     s.style.background = `silver`
     s.style.padding = `0.3em`
     s.style.borderRadius = `5px`
+    return s
+  }
 
+  function getBaseLinkTag (id, text, onclick, title = ``) {
     let a = document.createElement(`a`)
     a.id = `${id}_a`
     a.innerHTML = text
-    a.title = `Welcome popup`
+    a.title = title
     a.href = '#'
-    a.onclick = () => setWelcomePopup()
+    a.onclick = () => onclick()
+    return a
+  }
 
+  function setWelcomePopupLink (id, text) {
+    let d = document.createElement(`div`)
+    d.id = id
+    let s = getBaseSpan(id)
+    let a = getBaseLinkTag(id, text, setWelcomePopup, `Welcome popup`)
     s.appendChild(a)
     d.appendChild(s)
     return d
@@ -162,26 +198,26 @@ window.addEventListener('load', () => {
   }
 
   function setGreetingNameField () {
+    setGreetingFieldDiv()
+
+    if (!name_added) {
+      setGreetingInput()
+    }
+
+    document.getElementById(`greeting_field_div`).appendChild(setGreetingButton())
+    name_added = !name_added
+  }
+
+  function setGreetingFieldDiv () {
     let d = document.createElement(`d`)
     d.id = `greeting_field_div`
     d.style.textAlign = `center`
     d.style.display = `block`
     d.style.marginTop = `1em`
     document.getElementById(`greeting_div`).appendChild(d)
+  }
 
-    if (!name_added) {
-      let i = document.createElement(`input`)
-      i.type = `text`
-      i.id = `greeting_input`
-      i.placeholder = `Enter your name`
-      i.style.padding = `0.5em`
-      i.style.borderRadius = `5px`
-      i.style.marginRight = `0.5em`
-      document.getElementById(`greeting_field_div`).appendChild(i)
-
-      document.getElementById(`greeting_span`).innerHTML = `Hi stranger`
-    }
-
+  function setGreetingButton () {
     let b = getBaseButton()
     b.id = `greeting_button`
     b.innerHTML = (name_added ? `Change name` : `Add name`)
@@ -191,9 +227,20 @@ window.addEventListener('load', () => {
     b.style.padding = `0.5em`
     b.style.textDecoration = `none`
     b.style.marginBottom = `2em`
+    return b
+  }
 
-    document.getElementById(`greeting_field_div`).appendChild(b)
-    name_added = !name_added
+  function setGreetingInput () {
+    let i = document.createElement(`input`)
+    i.type = `text`
+    i.id = `greeting_input`
+    i.placeholder = `Enter your name`
+    i.style.padding = `0.5em`
+    i.style.borderRadius = `5px`
+    i.style.marginRight = `0.5em`
+    document.getElementById(`greeting_field_div`).appendChild(i)
+
+    document.getElementById(`greeting_span`).innerHTML = `Hi stranger`
   }
 
   function getBaseButton () {
@@ -210,12 +257,22 @@ window.addEventListener('load', () => {
   }
 
   function setGreetingField () {
+    let d = setGreetingDiv()
+    d.appendChild(setGreetingSpan())
+    return d
+  }
+
+  function setGreetingDiv () {
     let d = document.createElement(`div`)
     d.id = `greeting_div`
     d.style.paddingLeft = `1em`
     d.style.textAlign = `center`
     d.style.marginBottom = `0.5em`
+    d.style.marginTop = `2em`
+    return d
+  }
 
+  function setGreetingSpan () {
     let s = document.createElement(`span`)
     s.id = `greeting_span`
     s.style.background = `blue`
@@ -226,8 +283,6 @@ window.addEventListener('load', () => {
     s.style.borderColor = `black`
     s.innerHTML = `Hi stranger`
     s.style.fontSize = `150%`
-    d.appendChild(s)
-
-    return d
+    return s
   }
 })
