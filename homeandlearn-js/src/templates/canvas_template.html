@@ -1,28 +1,29 @@
-<!DOCTYPE HTML>
-<HTML lang="en">
-<HEAD>
-    <TITLE>Canvas Template</TITLE>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta lang="en">
+    <title>canvas template</title>
 
-    <SCRIPT>
+    <script>
       function drawOnCanvas () {
         let canvas = document.getElementById('canvas_1')
 
-        if (canvas.getContext) {
-          let canvas_context = canvas.getContext('2d')
+        if (canvas.getcontext) {
+          let canvas_context = canvas.getcontext('2d')
         }
       }
-    </SCRIPT>
-</HEAD>
-<BODY>
-<SECTION style="border-style: solid; border-width: 2px; width: 500px;">
-    <CANVAS WIDTH="400" HEIGHT="400" ID="canvas_1">
+    </script>
+</head>
+<body>
+<section style="border-style: solid; border-width: 2px; width: 500px;">
+    <canvas width="400" height="400" id="canvas_1">
         Canvas tag not supported
-    </CANVAS>
-</SECTION>
+    </canvas>
+</section>
 
-<P>
-    <INPUT TYPE="Button" VALUE="  Draw  " onClick="drawOnCanvas()">
-</P>
-</BODY>
-</HTML>
-
+<p>
+    <input type="button" value="  draw  " onclick="drawOnCanvas()">
+</p>
+</body>
+</html>

@@ -4,16 +4,21 @@ window.addEventListener('load', () => {
   let parts = []
   let menu_id = `menu`
   let name_added = false
-
   let main_container_div = setMainContainerDiv(main_container_div_id)
-  document.body.appendChild(main_container_div)
-  main_container_div.appendChild(setH1(`main_h1`))
-  main_container_div.appendChild(setDateField())
-  main_container_div.appendChild(setGreetingField())
-  setGreetingNameField()
-  setElements()
-  setMenu()
-  setBackGround()
+
+  setDefaults()
+
+  function setDefaults () {
+    document.body.appendChild(main_container_div)
+    main_container_div.appendChild(setHeading(`main_h1`))
+    main_container_div.appendChild(setDateField())
+    main_container_div.appendChild(setGreetingField())
+
+    setGreetingNameField()
+    setElements()
+    setMenu()
+    setBackGround()
+  }
 
   function setDateField () {
     let d = document.createElement(`d`)
@@ -50,7 +55,7 @@ window.addEventListener('load', () => {
         let a = document.createElement(`a`)
         a.innerHTML = part.text
         a.href = `#`
-        a.onclick = () => buildElementForMenu(part.id, part.text)
+        a.onclick = () => buildMenuElement(part.id, part.text)
         a.style.background = `silver`
         a.style.padding = `10px`
         a.style.borderRadius = `5px`
@@ -86,11 +91,10 @@ window.addEventListener('load', () => {
     let body = document.createElement(`div`)
     body.id = id
     body.style.padding = `1em 2em`
-    body.style.padding = `1em 2em`
     return body
   }
 
-  function setH1 (id) {
+  function setHeading (id) {
     let h1 = document.createElement(`h1`)
     h1.id = id
     h1.innerHTML = `JavaScript Review`
@@ -108,32 +112,44 @@ window.addEventListener('load', () => {
     document.body.style.overflow = `visible`
   }
 
-  function buildElementForMenu (id, text) {
+  function buildMenuElement (id, text) {
     removeElement(menu_id)
+    let link
 
     switch (id) {
       case `welcome_popup_div`:
-        document.getElementById(main_container_div_id).appendChild(setWelcomePopupLink(id, text))
+        link = buildLink(id, text, followWelcomePopupLink, `Open welcome popup`)
         break
       case `credit_card_form`:
-        document.getElementById(main_container_div_id).appendChild(buildCreditCardFormLink(id, text))
+        link = buildLink(id, text, followCreditCardFormLink, `Open credit card form`)
         break
       case `news`:
-        document.getElementById(main_container_div_id).appendChild(buildNewsLink(id, text))
+        link = buildLink(id, text, followNewsPageLink, `Open news form`)
         break
       default:  // `height_div`
-        document.getElementById(main_container_div_id).appendChild(setScreenHeightDiv(id))
+        link = setScreenHeightDiv(id)
     }
 
-    document.getElementById(main_container_div_id).appendChild(setMenuButton(`show_menu_button`))
+    let main_container = document.getElementById(main_container_div_id)
+    main_container.appendChild(link)
+    main_container.appendChild(setMenuButton(`show_menu_button`))
   }
 
-  function buildNewsLink (id, text) {
+  function buildLink (id, text, link_function, title) {
     let d = document.createElement(`div`)
     d.id = id
     let s = getBaseSpan(id)
-    s.appendChild(getBaseLinkTag(id, text, followNewsPageLink, `Open news form`))
+    s.appendChild(getBaseLink(id, text, link_function, title))
     d.appendChild(s)
+    return d
+  }
+
+  function setScreenHeightDiv (id) {
+    let d = document.createElement(`div`)
+    d.id = id
+    d.innerHTML = `Screen Height=` + window.screen.height
+    d.style.marginTop = `1em`
+    d.style.color = `white`
     return d
   }
 
@@ -141,17 +157,12 @@ window.addEventListener('load', () => {
     window.open(`${resource_location}/popup/news.html`, `Popup`)
   }
 
-  function buildCreditCardFormLink (id, text) {
-    let d = document.createElement(`div`)
-    d.id = id
-    let s = getBaseSpan(id)
-    s.appendChild(getBaseLinkTag(id, text, followCreditCardFormLink, `Open credit card form`))
-    d.appendChild(s)
-    return d
-  }
-
   function followCreditCardFormLink () {
     window.open(`${resource_location}/popup/credit_card_form.html`, `Popup`)
+  }
+
+  function followWelcomePopupLink () {
+    window.open(`${resource_location}/popup/start_popup.html`, `Popup`, `height=100,width=500`)
   }
 
   function getBaseSpan (id) {
@@ -163,7 +174,7 @@ window.addEventListener('load', () => {
     return s
   }
 
-  function getBaseLinkTag (id, text, onclick, title = ``) {
+  function getBaseLink (id, text, onclick, title = ``) {
     let a = document.createElement(`a`)
     a.id = `${id}_a`
     a.innerHTML = text
@@ -171,29 +182,6 @@ window.addEventListener('load', () => {
     a.href = '#'
     a.onclick = () => onclick()
     return a
-  }
-
-  function setWelcomePopupLink (id, text) {
-    let d = document.createElement(`div`)
-    d.id = id
-    let s = getBaseSpan(id)
-    let a = getBaseLinkTag(id, text, setWelcomePopup, `Welcome popup`)
-    s.appendChild(a)
-    d.appendChild(s)
-    return d
-  }
-
-  function setWelcomePopup () {
-    window.open(`${resource_location}/popup/start_popup.html`, `Popup`, `height=100,width=500`)
-  }
-
-  function setScreenHeightDiv (id) {
-    let d = document.createElement(`div`)
-    d.id = id
-    d.innerHTML = `Screen Height=` + window.screen.height
-    d.style.marginTop = `1em`
-    d.style.color = `white`
-    return d
   }
 
   function getGreetingText () {
@@ -256,8 +244,8 @@ window.addEventListener('load', () => {
     i.style.padding = `0.5em`
     i.style.borderRadius = `5px`
     i.style.marginRight = `0.5em`
-    document.getElementById(`greeting_field_div`).appendChild(i)
 
+    document.getElementById(`greeting_field_div`).appendChild(i)
     document.getElementById(`greeting_span`).innerHTML = `Hi stranger`
   }
 
