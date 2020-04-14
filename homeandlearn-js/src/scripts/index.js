@@ -29,6 +29,7 @@ window.addEventListener('load', () => {
     parts.push({ 'id': `welcome_popup_div`, 'text': `Click me for welcome popup` })
     parts.push({ 'id': `height_div`, 'text': `Show screen height div` })
     parts.push({ 'id': `credit_card_form`, 'text': `Show credit card form` })
+    parts.push({ 'id': `news`, 'text': `Show news page` })
     parts.push({ 'id': `show_menu_button`, 'text': `` })
   }
 
@@ -116,11 +117,27 @@ window.addEventListener('load', () => {
       case `credit_card_form`:
         document.getElementById(main_container_div_id).appendChild(buildCreditCardFormLink(id, text))
         break
+      case `news`:
+        document.getElementById(main_container_div_id).appendChild(buildNewsLink(id, text))
+        break
       default:  // `height_div`
         document.getElementById(main_container_div_id).appendChild(setScreenHeightDiv(id))
     }
 
     document.getElementById(main_container_div_id).appendChild(setMenuButton(`show_menu_button`))
+  }
+
+  function buildNewsLink (id, text) {
+    let d = document.createElement(`div`)
+    d.id = id
+    let s = getBaseSpan(id)
+    s.appendChild(getBaseLinkTag(id, text, followNewsPageLink, `Open news form`))
+    d.appendChild(s)
+    return d
+  }
+
+  function followNewsPageLink () {
+    window.open(`${resource_location}/popup/news.html`, `Popup`)
   }
 
   function buildCreditCardFormLink (id, text) {
