@@ -35,6 +35,7 @@ window.addEventListener('load', () => {
     parts.push({ 'id': `height_div`, 'text': `Show screen height div` })
     parts.push({ 'id': `credit_card_form`, 'text': `Show credit card form` })
     parts.push({ 'id': `news`, 'text': `Show news page` })
+    parts.push({ 'id': `images`, 'text': `Show images page` })
     parts.push({ 'id': `show_menu_button`, 'text': `` })
   }
 
@@ -121,10 +122,13 @@ window.addEventListener('load', () => {
         link = buildLink(id, text, followWelcomePopupLink, `Open welcome popup`)
         break
       case `credit_card_form`:
-        link = buildLink(id, text, followCreditCardFormLink, `Open credit card form`)
+        link = buildLink(id, text, followCreditCardFormLink, `Open credit card page`)
         break
       case `news`:
-        link = buildLink(id, text, followNewsPageLink, `Open news form`)
+        link = buildLink(id, text, followNewsPageLink, `Open news page`)
+        break
+      case `images`:
+        link = buildLink(id, text, followImagesPageLink, `Open images page`)
         break
       default:  // `height_div`
         link = setScreenHeightDiv(id)
@@ -159,6 +163,10 @@ window.addEventListener('load', () => {
 
   function followCreditCardFormLink () {
     window.open(`${resource_location}/popup/credit_card_form.html`, `Popup`)
+  }
+
+  function followImagesPageLink () {
+    window.open(`${resource_location}/popup/images.html`, `Popup`)
   }
 
   function followWelcomePopupLink () {
